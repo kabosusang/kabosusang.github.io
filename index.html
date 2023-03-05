@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" /><link rel="canonical" href="https://kabosusang.github.io/" />
       <link rel="shortcut icon" href="img/favicon.ico" />
-    <title>Ka_boGmEng</title>
+    <title>My Docs</title>
     <link rel="stylesheet" href="css/theme.css" />
     <link rel="stylesheet" href="css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
@@ -45,7 +45,15 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#opengl_1">关于OPengl</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#opengl_2">Opengl实际遇到的问题</a>
+    <li class="toctree-l2"><a class="reference internal" href="#gladglfw">Glad和Glfw头文件顺序问题</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#stb_image">stb_image 头文件使用问题</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#-stb_image">- 问题一:  stb_image相对路径加载不了图像</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#-stb_image_1">- 问题二: stb_image文件编译问题解决方法:</a>
+    </li>
+        </ul>
     </li>
     </ul>
                 </li>
@@ -75,24 +83,37 @@
               
                 <h1 id="opengl">游戏开发学习一:Opengl配置和遇到的问题</h1>
 <p>opengl配置: <strong>VScode</strong> + <strong>MinGW</strong> g++(64位) 具体配置细节可以看这篇文章<a href="https://blog.csdn.net/weixin_43952192/article/details/122877840">VSCODE+Opengl配置</a><br />
-<code>注意由于我们选择了64位G++所以glfw也选择64位并且GLad编译选择G++ ./src/glad.c -c -I ./include/</code></p>
+<code>注意由于我们选择了64位G++所以glfw也选择64位并且GLad编译选择G++ ./src/glad.c -c -I ./include/</code>👈很重要</p>
 <h2 id="opengl_1">关于OPengl</h2>
 <hr />
-<p>本人能力有限 Opengl部分推荐学习LearnOpengl并配合games101食用(网络搜索直接能观看)</p>
-<h2 id="opengl_2">Opengl实际遇到的问题</h2>
-<p>本人的vscode+opengl目录(github仓库地址):<br />
+<p>本人能力有限 Opengl部分推荐学习LearnOpengl(网页直搜)并配合games101食用(B站搜索直接能观看)
+本人的vscode+opengl目录(github仓库地址):<br />
 <a href="https://github.com/kabosusang/GameEnotes/tree/master/Learnopengl"><strong>入门创建摄像机</strong></a></p>
 <blockquote>
 <p>注意我本机环境复杂生成的makefile文件复杂 生成文件再build文件夹或者output</p>
 </blockquote>
-<ul>
-<li>问题一:stb_image相对路径加载不了图像<br />
-<img alt="stbi_loaderror.png" src="img/stbi_load.png" />
+<h2 id="gladglfw">Glad和Glfw头文件顺序问题</h2>
+<p><img alt="sequence" src="img/gladglfwsequence.png" /></p>
+<blockquote>
+<p>注意包含glad和glfw的头文件顺序不能相反 先是glad 再是glfw</p>
+</blockquote>
+<h2 id="stb_image">stb_image 头文件使用问题</h2>
+<h4 id="-stb_image">- 问题一:  stb_image相对路径加载不了图像</h4>
+<p><img alt="kabosusang.io1.png" src="img/stbi_load.png" />
         下图是无法编译的代码
-    <img alt="stbi_loaderror2.png" src="img/stbi_load2.png" />
-        <strong>我们发现stb_image使用了相对路径图像加载失败了</strong>(好郁闷)</li>
-<li></li>
-</ul>
+<img alt="kabosusang.io1.png" src="img/stbi_load2.png" />
+        <strong>我们发现stb_image使用了相对路径图像加载失败了</strong>(好郁闷)</p>
+<hr />
+<h3 id="-stb_image_1">- 问题二: stb_image文件编译问题解决方法:</h3>
+<pre><code>    这里来说说我的解决方法
+</code></pre>
+<p><img alt="stb_compiler" src="img/stb%E5%A4%B4%E6%96%87%E4%BB%B6%E7%BC%96%E8%AF%91.png" /></p>
+<blockquote>
+<p>如图创建一个cpp文件包含两句预编译代码 并且再main.cpp中使用<code>#include "stb_image.h"</code>
+注意stb_image.h头文件是我在stb_master复制过来的<br />
+<img alt="stb_compiler" src="img/stbcompiler.png" />
+这里也有很奇怪的BUG 如果不把<code>#include "stb_image.h"</code>放在最后(时常编译不成功)</p>
+</blockquote>
               
             </div>
           </div><footer>
@@ -135,5 +156,5 @@
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2023-03-04 11:35:36.892293+00:00
+Build Date UTC : 2023-03-05 08:42:59.928540+00:00
 -->
